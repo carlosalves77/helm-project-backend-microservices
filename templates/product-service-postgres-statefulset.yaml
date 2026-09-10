@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: product-service-database
+  name: {{ .Values.postgres.name }}
   namespace: default
   labels:
-    app: product-service-database
+    app: {{ .Values.postgres.name }}
 spec:
-  serviceName: product-service-database   
+  serviceName: {{ .Values.postgres.name }}
   replicas: 1
   selector:
     matchLabels:
-      app: product-service-database
+      app: {{ .Values.postgres.name }}
   template:
     metadata:
       labels:
-        app: product-service-database
+        app: {{ .Values.postgres.name }}
     spec:
       containers:
         - name: postgres
@@ -57,7 +57,7 @@ spec:
               command:
                 - sh
                 - -c
-                - "pg_isready -U $(POSTGRES_USER) -d $(POSTGRES_DB)"
+                - "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"
             initialDelaySeconds: 30
             periodSeconds: 15
             timeoutSeconds: 5
