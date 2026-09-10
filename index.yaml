@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  backend-app:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-09-10T20:47:27.561495418-03:00"
+    description: A Helm chart for Kubernetes
+    digest: b1c8b112c7aec5f05b6fb66cd97ceed1216295b8b2997cad69efbac4736bafc1
+    name: backend-app
+    type: application
+    urls:
+    - https://carlosalves77.github.io/helm-project-backend-microservices/backend-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-09-10T20:47:27.561201687-03:00"
