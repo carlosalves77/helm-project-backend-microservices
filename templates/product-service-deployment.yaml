@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: products-service
+  name: {{ .Values.appName }}
   namespace: default
   labels:
-    app: products-service
+    app: {{ .Values.appName }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: products-service
+      app: {{ .Values.appName }}
   template:
     metadata:
       labels:
-        app: products-service
+        app: {{ .Values.appName }}
     spec:
       initContainers:
         - name: wait-for-postgres
@@ -22,19 +22,19 @@ spec:
             - sh
             - -c
             - |
-              until nc -z product-service-database 5432; do
+              until nc -z {{ .Values.postgres.name }} 5432; do
                 echo "Aguardando Postgres...";
                 sleep 3;
               done;
               echo "Postgres disponível."
       containers:
-        - name: products-service
-          image: carlosalves77/products-service:v.0.0.1
+        - name: {{ .Values.appName }}
+          image: {{ .Values.products.service.image }}
           ports:
             - containerPort: 4100
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://product-service-database:5432/product_service_database"
+              value: "jdbc:postgresql://{{ .Values.postgres.name }}:5432/{{ .Values.postgres.database }}"
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -49,6 +49,8 @@ spec:
               value: "update"
             - name: SERVER_PORT
               value: "4100"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-service:9092"  
             - name: SPRING_JPA_OPEN_IN_VIEW
               value: "false"
             - name: SPRING_JPA_DATABASE_PLATFORM
