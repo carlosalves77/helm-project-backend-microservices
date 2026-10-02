@@ -10,7 +10,7 @@ postgres:
 
 products:
   service:
-   image: "carlosalves77/products-service:v.0.0.1"
+   image: "carlosalves77/products-service:v.1.0.0"
 appName: products-service
 
 
