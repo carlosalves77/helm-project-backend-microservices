@@ -4,9 +4,8 @@ metadata:
   name: products-service
   namespace: default
 spec:
-  selector:
-    app: products-service
+  type: NodePort
   ports:
     - port: 4100
       targetPort: 4100
-  type: ClusterIP
+      nodePort: 30080 
